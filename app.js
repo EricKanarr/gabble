@@ -37,14 +37,14 @@ app.use(expressValidator());
 
 //take to homepage
 app.get('/home', function(req, res){
-  console.log(req.session);
+  // console.log(req.session);
   res.render('home');
 });
 
 // take to messages page
-app.get('/messages', function(req, res){
-  res.render('messages');
-});
+// app.get('/messages', function(req, res){
+//   res.render('messages');
+// });
 
 // take to signup page
 app.get('/signup', function(req, res){
@@ -57,15 +57,19 @@ app.get('/home', function(req, res){
     var user = models.user.findOne({
       where: {
         username: req.session.username,
-        password: req.session.password
+        password: req.session.password,
       }
     }).then(function(user){
+      // console.log(username);
       if(user){
         req.session.username = req.body.username;
+        // console.log(username);
         req.session.userid = user.dataValues.id;
         let username = req.session.username;
+        // console.log(username);
         let userid = req.session.userid;
-        res.render('messages', {user: user});
+        res.render('messages', {user: username});
+        // console.log(username);
       }
     })
   }else {
@@ -75,6 +79,7 @@ app.get('/home', function(req, res){
 
 app.post('/home', function(req, res){
   let username = req.body.username;
+  // console.log(username);
   let password = req.body.password;
   models.user.findOne({
     where: {
@@ -86,7 +91,7 @@ app.post('/home', function(req, res){
     if (user.password == password){
       req.session.username = username;
       req.session.authenticated = true;
-      console.log(req.session);
+      // console.log(req.session);
       res.redirect('/messages');
     }else{
       res.redirect('/signup');
@@ -107,7 +112,29 @@ app.post('/signup', function(req, res) {
 
 // add gab to messages table
 // figure out associations
+// app.post('/messages', function(req, res){
+//   const messages = models.messages.build({
+//     messageText: req.body.newgab
+//   })
+//   messages.save().then(function(messages){
+//     console.log(messages);
+//     res.redirect('/messages')
+//   })
+// })
+// display messages
+app.get('/messages', function(req, res){
+  console.log("user gets to /messages and req.body.username: " + req.session.activeUser);
+
+  models.messages.findAll().then(function(messages){
+    res.render('messages', {messages: messages, gabname: req.session.activeUser})
+  })
+})
+
+// add gab to messages table
+// figure out associations
 app.post('/messages', function(req, res){
+  req.session.activeUser = req.body.username
+  console.log("user posts to /messages and req.body.username: " + req.body.username);
   const messages = models.messages.build({
     messageText: req.body.newgab
   })
@@ -116,10 +143,12 @@ app.post('/messages', function(req, res){
     res.redirect('/messages')
   })
 })
-// display messages
-// app.get('/messages', function(req, res){
-//   models.messages.findAll().then(function(messages){
-//     res.render('messages', {messages: messages, name: req.session.username})
+
+// app.post('/messages', function(req, res){
+//   const messages = models.messages.build({
+//     messageText: req.body.newgab
+//   })
+//   post.save().then(function(post){
 //   })
 // })
 
