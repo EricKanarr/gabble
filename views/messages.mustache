@@ -14,15 +14,12 @@
         </ul>
     </nav>
     </header>
-    <h1>home page, welcome {{#username}}{{.}}{{/username}}</h1>
-    <div class="user">
-      <h3>{{user}}</h3>
-    </div>
-    <form class="" action="/home" method="post">
-      <input type="text" name="username" value="" placeholder="username">
-      <input type="text" name="password" value="" placeholder="password">
-      <button type="submit" name="button">log-in</button>
+    <h1>welcome {{#username}}{{.}}{{/username}}</h1>
+    <textarea class="newgab" type="text" placeholder="type gab" rows="8" cols="80"></textarea>
+    <button type="submit" name="button">submit</button>
+    <div class="gabboard">
 
-    </form>
+    </div>
+
   </body>
   </html>

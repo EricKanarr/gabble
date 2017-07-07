@@ -14,15 +14,13 @@
         </ul>
     </nav>
     </header>
-    <h1>home page, welcome {{#username}}{{.}}{{/username}}</h1>
-    <div class="user">
-      <h3>{{user}}</h3>
+    <h1>Join Gabble</h1>
     </div>
-    <form class="" action="/home" method="post">
-      <input type="text" name="username" value="" placeholder="username">
+    <form action="/signup" method="post">
+      <input type="text" name="name" value="" placeholder="username">
       <input type="text" name="password" value="" placeholder="password">
-      <button type="submit" name="button">log-in</button>
-
+      <input type="text" name="password" value="" placeholder="reenter password">
+      <button type="submit" name="button">create account</button>
     </form>
   </body>
   </html>
