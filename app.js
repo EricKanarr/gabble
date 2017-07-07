@@ -20,6 +20,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+// console.log(session);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,6 +37,7 @@ app.use(expressValidator());
 
 //take to homepage
 app.get('/home', function(req, res){
+  console.log(req.session);
   res.render('home');
 });
 
@@ -93,12 +95,33 @@ app.post('/home', function(req, res){
 })
 
 // create new gab user with signup
-// nest this in a app.post
-app.post('/signup', function(req, res){
-// Task.create({ title: 'foo', description: 'bar', deadline: new Date() }).then(task => {
-  // you can now access the newly created task via the variable task
-// })
+app.post('/signup', function(req, res) {
+  const user = models.user.build({
+    username: req.body.name,
+    password: req.body.password
+  })
 
+  user.save();
+  res.redirect('/messages');
+})
+
+// add gab to messages table
+// figure out associations
+app.post('/messages', function(req, res){
+  const messages = models.messages.build({
+    messageText: req.body.newgab
+  })
+  messages.save().then(function(messages){
+    console.log(messages);
+    res.redirect('/messages')
+  })
+})
+// display messages
+// app.get('/messages', function(req, res){
+//   models.messages.findAll().then(function(messages){
+//     res.render('messages', {messages: messages, name: req.session.username})
+//   })
+// })
 
 
 

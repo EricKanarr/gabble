@@ -15,11 +15,20 @@
     </nav>
     </header>
     <h1>welcome {{#username}}{{.}}{{/username}}</h1>
-    <textarea class="newgab" type="text" placeholder="type gab" rows="8" cols="80"></textarea>
+    <form action="/messages" method="post">
+    <textarea class="newgab" name="newgab" type="text" placeholder="type gab" rows="8" cols="80"></textarea>
     <button type="submit" name="button">submit</button>
-    <div class="gabboard">
+  </form>
+  <!--  show gabs in message board newest first-->
+  <!-- <div class="postsdiv" style="overflow:auto;">
+    <ul>
+      {{#posts}}
+      <li class ="messageText">{{messageText}}</li>
+      {{\posts}}
+    </ul>
 
-    </div>
+  </div> -->
+
 
   </body>
   </html>
