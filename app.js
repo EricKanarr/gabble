@@ -115,13 +115,17 @@ app.post('/home', function(req, res){
 
 // create new gab user with signup
 app.post('/signup', function(req, res) {
+  req.session.authenticated = true;
+  req.session.username = req.body.name;
+  req.session.username = req.body.password;
+
   const user = models.user.build({
     username: req.body.name,
     password: req.body.password
   })
 
   user.save();
-  res.redirect('/messages');
+  res.redirect('/home');
 })
 
 // add gab to messages table
