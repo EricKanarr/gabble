@@ -50,10 +50,10 @@ app.use(expressValidator());
 
 
 //take to homepage
-// app.get('/', function(req, res){
-//   // console.log(req.session);
-//   res.render('home');
-// });
+app.get('/', function(req, res){
+  // console.log(req.session);
+  res.redirect('/home');
+});
 
 // take to messages page
 // app.get('/messages', function(req, res){
